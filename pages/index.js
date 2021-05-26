@@ -36,11 +36,11 @@ export default function Home({ events }) {
     );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
     const res = await fetch(`${API_URL}/api/events`);
     const events = await res.json();
 
     return {
-        props: { events: events.slice(0, 4) },
+        props: { events: events.slice(0, 4), revalidate: 1 },
     };
 }
