@@ -23,3 +23,7 @@
 .showcase * {
     z-index: 20;
 }
+
+.modal-show {
+    display: block !important;
+}

@@ -1,10 +1,12 @@
 import moment from "moment";
+import { FaImage } from "react-icons/fa";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import Layout from "@/components/Layout";
+import Modal from "@/components/Modal";
 import { API_URL } from "@/config/index";
 
 export default function EditEventPage({ event }) {
@@ -17,6 +19,10 @@ export default function EditEventPage({ event }) {
         date: event.date,
         time: event.time,
     });
+    const [imagePreview, setImagePreview] = useState(
+        event.image ? event.image.formats.thumbnail.url : null
+    );
+    const [showModal, setShowModal] = useState(false);
 
     const router = useRouter();
 
@@ -149,8 +155,32 @@ export default function EditEventPage({ event }) {
                             </div>
                         </div>
                     </form>
+
+                    <h3 className="my-3">Event Image</h3>
+                    {imagePreview ? (
+                        <img src={imagePreview} />
+                    ) : (
+                        <div>
+                            <p>No image uploaded</p>
+                        </div>
+                    )}
+                    <div className="mt-3">
+                        <button
+                            className="btn btn-dark"
+                            onClick={() => setShowModal(true)}
+                        >
+                            <FaImage /> Set Image
+                        </button>
+                    </div>
                 </div>
             </div>
+            <Modal
+                show={showModal}
+                onClose={() => setShowModal(false)}
+                title="Image Upload"
+            >
+                Image Upload
+            </Modal>
         </Layout>
     );
 }
