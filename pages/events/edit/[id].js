@@ -1,3 +1,4 @@
+import moment from "moment";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
@@ -6,15 +7,15 @@ import Link from "next/link";
 import Layout from "@/components/Layout";
 import { API_URL } from "@/config/index";
 
-export default function AddEventPage() {
+export default function EditEventPage({ event }) {
     const [values, setValues] = useState({
-        name: "",
-        performers: "",
-        venue: "",
-        address: "",
-        description: "",
-        date: "",
-        time: "",
+        name: event.name,
+        performers: event.performers,
+        venue: event.venue,
+        address: event.address,
+        description: event.description,
+        date: event.date,
+        time: event.time,
     });
 
     const router = useRouter();
@@ -31,8 +32,8 @@ export default function AddEventPage() {
             return false;
         }
 
-        const res = await fetch(`${API_URL}/events`, {
-            method: "POST",
+        const res = await fetch(`${API_URL}/events/${event.id}`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -55,7 +56,7 @@ export default function AddEventPage() {
         <Layout title="Add New Event">
             <div className="row justify-content-center mt-4">
                 <div className="col-md-10">
-                    <h2>Add Event</h2>
+                    <h2>Edit Event</h2>
                     <ToastContainer position="top-center" />
                     <form onSubmit={handleSubmit}>
                         <div className="row mt-3">
@@ -105,7 +106,9 @@ export default function AddEventPage() {
                                     type="date"
                                     name="date"
                                     className="form-control"
-                                    value={values.date}
+                                    value={moment(values.date).format(
+                                        "yyyy-MM-DD"
+                                    )}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -136,7 +139,7 @@ export default function AddEventPage() {
                                     className="btn btn-danger"
                                     type="submit"
                                 >
-                                    Add Event
+                                    Edit Event
                                 </button>
                                 <Link href="/">
                                     <a className="btn btn-primary ms-3">
@@ -150,4 +153,15 @@ export default function AddEventPage() {
             </div>
         </Layout>
     );
+}
+
+export async function getServerSideProps({ params: { id } }) {
+    const res = await fetch(`${API_URL}/events/${id}`);
+    const event = await res.json();
+
+    return {
+        props: {
+            event: event,
+        },
+    };
 }

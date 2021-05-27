@@ -5,7 +5,7 @@ export default function Header() {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">
+                <a className="navbar-brand" href="/">
                     Rock Events
                 </a>
                 <button
@@ -25,13 +25,13 @@ export default function Header() {
                 >
                     <ul className="navbar-nav mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <Link href="/">
-                                <a className="nav-link">Home</a>
+                            <Link href="/events">
+                                <a className="nav-link">Events</a>
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link href="/events">
-                                <a className="nav-link">Events</a>
+                            <Link href="/events/add">
+                                <a className="nav-link">Add Event</a>
                             </Link>
                         </li>
                         <li className="nav-item">

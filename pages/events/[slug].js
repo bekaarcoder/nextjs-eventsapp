@@ -1,8 +1,27 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { API_URL } from "@/config/index";
 
 export default function EventPage({ event }) {
+    const router = useRouter();
+    const deleteEvent = async (e) => {
+        if (confirm("Are you sure you want to delete this event?")) {
+            const res = await fetch(`${API_URL}/events/${event.id}`, {
+                method: "DELETE",
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                toast.error(data.message);
+            } else {
+                router.push("/events");
+            }
+        }
+    };
     return (
         <Layout>
             <div className="row mt-4 justify-content-center">
@@ -22,7 +41,11 @@ export default function EventPage({ event }) {
                             Edit Event
                         </a>
                     </Link>
-                    <a href="#" className="btn btn-sm btn-outline-danger me-3">
+                    <a
+                        href="#"
+                        className="btn btn-sm btn-outline-danger me-3"
+                        onClick={deleteEvent}
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
@@ -46,8 +69,13 @@ export default function EventPage({ event }) {
                         {event.time}
                     </h4>
                     <h2 className="mb-3">{event.name}</h2>
+                    <ToastContainer position="top-center" />
                     <img
-                        src={event.image.formats.medium.url}
+                        src={
+                            event.image
+                                ? event.image.formats.medium.url
+                                : "/images/default.jpg"
+                        }
                         className="img-fluid"
                     />
                     <h3 className="mt-3">Performers:</h3>

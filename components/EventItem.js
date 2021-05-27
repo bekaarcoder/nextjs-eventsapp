@@ -10,7 +10,7 @@ export default function EventItem({ event }) {
                             src={
                                 event.image
                                     ? event.image.formats.thumbnail.url
-                                    : "/images/event1.jpg"
+                                    : "/images/default.jpg"
                             }
                             className="img-fluid"
                         />
