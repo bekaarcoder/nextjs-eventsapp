@@ -42,10 +42,14 @@ export default function EventPage({ event }) {
                 </div>
                 <div className="col-md-10">
                     <h4 className="text-muted">
-                        {event.date} at {event.time}
+                        {new Date(event.date).toDateString("en-US")} at{" "}
+                        {event.time}
                     </h4>
                     <h2 className="mb-3">{event.name}</h2>
-                    <img src={event.image} className="img-fluid" />
+                    <img
+                        src={event.image.formats.medium.url}
+                        className="img-fluid"
+                    />
                     <h3 className="mt-3">Performers:</h3>
                     <p>{event.performers}</p>
                     <h3>Description:</h3>
@@ -62,7 +66,7 @@ export default function EventPage({ event }) {
 }
 
 export async function getStaticPaths() {
-    const res = await fetch(`${API_URL}/api/events`);
+    const res = await fetch(`${API_URL}/events`);
     const events = await res.json();
 
     const paths = events.map((item) => ({
@@ -76,7 +80,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug } }) {
-    const res = await fetch(`${API_URL}/api/events/${slug}`);
+    const res = await fetch(`${API_URL}/events?slug=${slug}`);
     const events = await res.json();
 
     return {
