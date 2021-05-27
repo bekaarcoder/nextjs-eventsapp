@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Search from "./Search";
 
 export default function Header() {
     return (
@@ -19,10 +20,10 @@ export default function Header() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div
-                    className="collapse navbar-collapse"
+                    className="collapse navbar-collapse d-inline"
                     id="navbarSupportedContent"
                 >
-                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <ul className="navbar-nav mb-2 mb-lg-0">
                         <li className="nav-item">
                             <Link href="/">
                                 <a className="nav-link">Home</a>
@@ -40,6 +41,7 @@ export default function Header() {
                         </li>
                     </ul>
                 </div>
+                <Search />
             </div>
         </nav>
     );
