@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FaSignInAlt } from "react-icons/fa";
 import Search from "./Search";
 
 export default function Header() {
@@ -35,8 +36,10 @@ export default function Header() {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link href="/about">
-                                <a className="nav-link">About</a>
+                            <Link href="/account/login">
+                                <a className="nav-link">
+                                    <FaSignInAlt /> Login
+                                </a>
                             </Link>
                         </li>
                     </ul>
