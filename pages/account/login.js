@@ -5,13 +5,23 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import Layout from "@/components/Layout";
+import AuthContext from "@/context/AuthContext";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const { login, error } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (error) {
+            toast.error(error);
+        }
+    }, [error]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        login({ email, password });
     };
 
     return (
@@ -19,7 +29,7 @@ export default function LoginPage() {
             <div className="row justify-content-center mt-4">
                 <div className="col-md-6">
                     <h3>Login Here</h3>
-                    <ToastContainer />
+                    <ToastContainer position="top-center" />
                     <form onSubmit={handleSubmit}>
                         <div className="my-3">
                             <label className="form-label">Email</label>

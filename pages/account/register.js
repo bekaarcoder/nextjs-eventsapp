@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import Layout from "@/components/Layout";
+import AuthContext from "@/context/AuthContext";
 
 export default function RegisterPage() {
     const [username, setUsername] = useState("");
@@ -12,12 +13,23 @@ export default function RegisterPage() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const { register, error } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (error) {
+            toast.error(error);
+        }
+    });
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
             toast.error("Password do not match.");
+            return;
         }
+
+        register({ username, email, password });
     };
 
     return (
@@ -72,7 +84,7 @@ export default function RegisterPage() {
                             />
                         </div>
                         <button type="submit" className="btn btn-danger">
-                            Login
+                            Register
                         </button>
                         <p className="mt-3">
                             Already a user?{" "}

@@ -1,5 +1,6 @@
 import Head from "next/head";
 import "bootstrap/dist/css/bootstrap.css";
+import { AuthProvider } from "@/context/AuthContext";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
@@ -11,7 +12,9 @@ function MyApp({ Component, pageProps }) {
                     content="width=device-width, initial-scale=1"
                 />
             </Head>
-            <Component {...pageProps} />
+            <AuthProvider>
+                <Component {...pageProps} />
+            </AuthProvider>
         </>
     );
 }
