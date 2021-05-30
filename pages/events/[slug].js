@@ -39,7 +39,7 @@ export default function EventPage({ event }) {
     );
 }
 
-export async function getStaticPaths() {
+/* export async function getStaticPaths() {
     const res = await fetch(`${API_URL}/events`);
     const events = await res.json();
 
@@ -63,10 +63,10 @@ export async function getStaticProps({ params: { slug } }) {
         },
         revalidate: 1,
     };
-}
+} */
 
-/* export async function getServerSideProps({ query: { slug } }) {
-    const res = await fetch(`${API_URL}/api/events/${slug}`);
+export async function getServerSideProps({ query: { slug } }) {
+    const res = await fetch(`${API_URL}/events?slug=${slug}`);
     const events = await res.json();
 
     return {
@@ -74,4 +74,4 @@ export async function getStaticProps({ params: { slug } }) {
             event: events[0],
         },
     };
-} */
+}
