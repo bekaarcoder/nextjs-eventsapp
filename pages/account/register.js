@@ -13,13 +13,17 @@ export default function RegisterPage() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const { register, error } = useContext(AuthContext);
+    const router = useRouter();
+
+    const { register, error, user } = useContext(AuthContext);
 
     useEffect(() => {
-        if (error) {
+        if (user) {
+            router.push("/");
+        } else if (error) {
             toast.error(error);
         }
-    });
+    }, [user, error]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
